@@ -1,7 +1,6 @@
 package com.ebay.assessment.flightbooking.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import com.ebay.assessment.flightbooking.mapper.BookingMapper;
 import com.ebay.assessment.flightbooking.repository.BookingRepository;
 import com.ebay.assessment.flightbooking.repository.FlightRepository;
 import com.ebay.assessment.flightbooking.service.BookingService;
+import com.ebay.assessment.flightbooking.util.BookingIdGenerator;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -23,15 +23,15 @@ public class BookingServiceImpl implements BookingService {
 	private final FlightRepository flightRepository;
 	private final BookingRepository bookingRepository;
 	private final BookingMapper bookingMapper;
-
-	private final AtomicLong bookingSequence = new AtomicLong(1000);
+	private final BookingIdGenerator bookingIdGenerator;
 
 	public BookingServiceImpl(FlightRepository flightRepository, BookingRepository bookingRepository,
-			BookingMapper bookingMapper) {
+			BookingMapper bookingMapper, BookingIdGenerator bookingIdGenerator) {
 
 		this.flightRepository = flightRepository;
 		this.bookingRepository = bookingRepository;
 		this.bookingMapper = bookingMapper;
+		this.bookingIdGenerator = bookingIdGenerator;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class BookingServiceImpl implements BookingService {
 
 			flight.reserveSeat();
 
-			Booking booking = new Booking(String.valueOf(bookingSequence.incrementAndGet()), flight.getFlightNumber(),
+			Booking booking = new Booking(bookingIdGenerator.generateBookingId(), flight.getFlightNumber(),
 					request.getPassengerName(), LocalDateTime.now());
 
 			bookingRepository.save(booking);

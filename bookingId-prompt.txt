@@ -1,0 +1,6 @@
+Currently, the booking ID is generated sequentially using an 'AtomicLong' initialized to 1000 within BookingServiceImpl.java.
+
+Refactor this implementation by moving the booking ID generation logic out of the service layer into a dedicated utility class. Generate more realistic and user-friendly booking IDs instead of returning a plain sequential number.
+
+Update BookingServiceImpl to use the new utility class through dependency injection and remove the existing AtomicLong sequence from the service. Ensure the solution remains thread-safe, generates unique booking IDs, and follows Spring Boot and clean code best practices.
+
