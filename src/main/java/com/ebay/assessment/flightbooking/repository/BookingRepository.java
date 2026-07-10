@@ -4,9 +4,7 @@ import com.ebay.assessment.flightbooking.domain.Booking;
 
 public interface BookingRepository {
 
-    Booking save(Booking booking);
-    
-    boolean existsByFlightNumberAndPassengerName(
-            String flightNumber,
-            String passengerName);
+	Booking save(Booking booking);
+
+	boolean existsByFlightNumberAndPassengerName(String flightNumber, String passengerName);
 }

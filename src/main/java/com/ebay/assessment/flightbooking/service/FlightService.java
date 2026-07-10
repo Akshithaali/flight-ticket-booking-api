@@ -5,5 +5,5 @@ import com.ebay.assessment.flightbooking.dto.response.FlightResponse;
 
 public interface FlightService {
 
-    FlightResponse createFlight(CreateFlightRequest request);
+	FlightResponse createFlight(CreateFlightRequest request);
 }

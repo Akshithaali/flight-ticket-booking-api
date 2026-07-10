@@ -12,22 +12,19 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class InMemoryFlightRepository implements FlightRepository {
 
-    private final Map<String, Flight> flights = new ConcurrentHashMap<>();
+	private final Map<String, Flight> flights = new ConcurrentHashMap<>();
 
-    @Override
-    public Flight save(Flight flight) {
+	@Override
+	public Flight save(Flight flight) {
 
-        flights.put(
-                flight.getFlightNumber(),
-                flight);
+		flights.put(flight.getFlightNumber(), flight);
 
-        return flight;
-    }
+		return flight;
+	}
 
-    @Override
-    public Optional<Flight> findByFlightNumber(String flightNumber) {
+	@Override
+	public Optional<Flight> findByFlightNumber(String flightNumber) {
 
-        return Optional.ofNullable(
-                flights.get(flightNumber));
-    }
+		return Optional.ofNullable(flights.get(flightNumber));
+	}
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface FlightRepository {
 
-    Flight save(Flight flight);
+	Flight save(Flight flight);
 
-    Optional<Flight> findByFlightNumber(String flightNumber);
+	Optional<Flight> findByFlightNumber(String flightNumber);
 }

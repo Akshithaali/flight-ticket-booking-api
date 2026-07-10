@@ -1,0 +1,36 @@
+The custom exceptions in the package 'com.ebay.assessment.flightbooking.domain.exception' are being thrown correctly for scenarios such as flight not found, flight already exists, flight fully booked, and duplicate booking.
+
+However, while testing the APIs, these exceptions are resulting in 500 Internal Server Error responses because there is currently no global exception handling mechanism. The current 'GlobalExceptionHandler' class is empty.
+
+Modify GlobalExceptionHandler.java to implement centralized exception handling using Spring Boot. Handle each custom exception and return appropriate HTTP status codes and meaningful error messages.
+handle the following scenarios:
+
+
+For the API POST /api/v1/flights, 
+
+
+1. Flight already exists → 409 Conflict
+2. Flight number is null, empty, or blank → 400 Bad Request
+3. Capacity is null → 400 Bad Request
+4. Capacity is below the minimum allowed value or exceeds the maximum allowed value → 400 Bad Request
+5. Capacity must be a valid number → 400 Bad Request
+
+
+
+For the API 'POST /api/v1/flights/bookings', 
+
+1. Flight not found → 404 Not Found
+2. Flight fully booked → 409 Conflict
+3. Duplicate booking for the same passenger on the same flight → 409 Conflict
+4. Flight number is null, empty, or blank → 400 Bad Request
+5. Passenger name is null, empty, or blank → 400 Bad Request
+
+
+Any request validation failure → 400 Bad Request
+
+Use '@RestControllerAdvice' to implement global exception handling. Create dedicated @ExceptionHandler methods for all custom exceptions. Also handle validation-related exceptions such as MethodArgumentNotValidException, ConstraintViolationException, and IllegalArgumentException.
+
+Return a consistent error response structure containing timestamp, status, error, message, and path. Include the request URI in the response and provide clear, user-friendly error messages.
+
+Add a generic fallback handler for unexpected exceptions that returns a 500 Internal Server Error response with the message "An unexpected error occurred".
+

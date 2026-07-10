@@ -8,11 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlightMapper {
 
-    public FlightResponse toResponse(Flight flight) {
+	public FlightResponse toResponse(Flight flight) {
 
-        return new FlightResponse(
-                flight.getFlightNumber(),
-                flight.getCapacity(),
-                flight.getAvailableSeats());
-    }
+		return new FlightResponse(flight.getFlightNumber(), flight.getCapacity(), flight.getAvailableSeats());
+	}
 }

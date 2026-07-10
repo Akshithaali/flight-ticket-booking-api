@@ -8,11 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookingMapper {
 
-    public BookingResponse toResponse(Booking booking) {
+	public BookingResponse toResponse(Booking booking) {
 
-        return new BookingResponse(
-                booking.bookingId(),
-                booking.flightNumber(),
-                booking.passengerName());
-    }
+		return new BookingResponse(booking.bookingId(), booking.flightNumber(), booking.passengerName());
+	}
 }

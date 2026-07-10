@@ -20,59 +20,49 @@ import com.ebay.assessment.flightbooking.service.BookingService;
 @Service
 public class BookingServiceImpl implements BookingService {
 
-    private final FlightRepository flightRepository;
-    private final BookingRepository bookingRepository;
-    private final BookingMapper bookingMapper;
+	private final FlightRepository flightRepository;
+	private final BookingRepository bookingRepository;
+	private final BookingMapper bookingMapper;
 
-    private final AtomicLong bookingSequence = new AtomicLong(1000);
+	private final AtomicLong bookingSequence = new AtomicLong(1000);
 
-    public BookingServiceImpl(
-            FlightRepository flightRepository,
-            BookingRepository bookingRepository,
-            BookingMapper bookingMapper) {
+	public BookingServiceImpl(FlightRepository flightRepository, BookingRepository bookingRepository,
+			BookingMapper bookingMapper) {
 
-        this.flightRepository = flightRepository;
-        this.bookingRepository = bookingRepository;
-        this.bookingMapper = bookingMapper;
-    }
+		this.flightRepository = flightRepository;
+		this.bookingRepository = bookingRepository;
+		this.bookingMapper = bookingMapper;
+	}
 
-    @Override
-    public BookingResponse createBooking(CreateBookingRequest request) {
+	@Override
+	public BookingResponse createBooking(CreateBookingRequest request) {
 
-        Flight flight = flightRepository.findByFlightNumber(request.getFlightNumber())
-                .orElseThrow(() -> new FlightNotFoundException(request.getFlightNumber()));
+		Flight flight = flightRepository.findByFlightNumber(request.getFlightNumber())
+				.orElseThrow(() -> new FlightNotFoundException(request.getFlightNumber()));
 
-        /*
-         * Prevent overbooking by making availability check + seat reservation atomic.
-         */
-        synchronized (flight) {
+		/*
+		 * Prevent overbooking by making availability check + seat reservation atomic.
+		 */
+		synchronized (flight) {
 
-            if (bookingRepository.existsByFlightNumberAndPassengerName(
-                    flight.getFlightNumber(),
-                    request.getPassengerName())) {
+			if (bookingRepository.existsByFlightNumberAndPassengerName(flight.getFlightNumber(),
+					request.getPassengerName())) {
 
-                throw new DuplicateBookingException(
-                        request.getPassengerName(),
-                        flight.getFlightNumber());
-            }
+				throw new DuplicateBookingException(request.getPassengerName(), flight.getFlightNumber());
+			}
 
-            if (!flight.hasAvailableSeats()) {
-                throw new FlightFullyBookedException(
-                        flight.getFlightNumber());
-            }
+			if (!flight.hasAvailableSeats()) {
+				throw new FlightFullyBookedException(flight.getFlightNumber());
+			}
 
-            flight.reserveSeat();
+			flight.reserveSeat();
 
-            Booking booking = new Booking(
-                    String.valueOf(bookingSequence.incrementAndGet()),
-                    flight.getFlightNumber(),
-                    request.getPassengerName(),
-                    LocalDateTime.now()
-            );
+			Booking booking = new Booking(String.valueOf(bookingSequence.incrementAndGet()), flight.getFlightNumber(),
+					request.getPassengerName(), LocalDateTime.now());
 
-            bookingRepository.save(booking);
+			bookingRepository.save(booking);
 
-            return bookingMapper.toResponse(booking);
-        }
-    }
+			return bookingMapper.toResponse(booking);
+		}
+	}
 }

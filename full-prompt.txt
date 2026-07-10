@@ -1,0 +1,47 @@
+Prompt:
+Design and build a small Flight Ticket Booking REST API in Spring Boot. 
+I had created a package com.ebay.assessment.flightbooking".
+
+The requirements are:
+
+1. A flight can be created with a flight number (string) and capacity (int).
+
+2. A passenger can book a ticket by providing the flight number (string ) and passenger name (string).
+
+3. Assume the client already knows the flight number, so flight search functionality is not needed.
+
+4. The application should use in-memory storage only. No database is needed.
+
+5. Overbooking should never be allowed.
+
+6. No authentication or authorization is required.
+
+7. No APIs are needed to retrieve bookings. Creating bookings is enough.
+
+
+I'd like the project to be structured in a way that is clean, maintainable and easy to extend if more requirements are added later.
+
+Please come up with a good project structure and implementation approach. I prefer to keep API contracts separate from domain models, use request/response DTOs, have dedicated domain objects for Flight and Booking and keep business logic out of the controllers.
+
+Use repository interfaces with in-memory implementations backed by ConcurrentHashMap. Also think about exception handling, validation, mapping between models and DTOs and thread safety for the booking flow.
+
+Start by designing the overall structure and then generate the initial implementation with the main APIs, domain models, repositories, services, DTOs and exception handling. The goal is not just to make it work, but to have a codebase that looks like something that could be discussed confidently during a code review.
+
+Should be separated like layers, 
+com.ebay.assessment.flightbooking.controller (BookingController and FlightController)
+com.ebay.assessment.flightbooking.dto (request and response)
+com.ebay.assessment.flightbooking.service (interface and implementation)
+com.ebay.assessment.flightbooking.repository (interface and implementation)
+com.ebay.assessment.flightbooking.domain ( flight , booking and domain exceptions)
+
+Notes :
+Add mapper classes for DTO/domain conversion.
+Ensure thread safety during booking operations.
+Use modern Java features where appropriate, such as ConcurrentHashMap, AtomicInteger, Optional, Streams, immutable collections, and constructor-based dependency injection.
+
+Implement the complete end-to-end flow for:
+
+POST /api/v1/flights
+POST /api/v1/flights/bookings
+
+Generate all required classes and wire the application together so it is runnable and follows clean coding practices."
