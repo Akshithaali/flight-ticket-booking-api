@@ -1,0 +1,21 @@
+Analyze the application completely. This application is for flight creation and ticket booking, where bookings are made using a known flight number and no flight search functionality is required.
+
+Extract the requirements, constraints, and expected behaviors from the test details provided below and verify that the implementation satisfies them.
+
+Specifically verify that:
+
+1. Flight data and bookings are stored in memory only.
+2. Overbooking is prevented, including under concurrent booking requests.
+3. No unnecessary features have been implemented beyond the assignment scope (authentication, authorization, rate limiting, destination logic, booking retrieval APIs, etc.).
+4. REST endpoints use appropriate HTTP methods, status codes, request validation, and exception handling.
+
+Assess whether the application meets production-ready Java and Spring Boot standards. Review the overall design, code quality, validation, exception handling, concurrency handling, API design, maintainability, logging, and test coverage.
+
+Implement improvements where appropriate, including adding or improving logging, increasing automated test coverage, strengthening validation, improving error handling, refactoring code where beneficial, and addressing any production-readiness concerns that are within the scope of the assignment. Do not add features that violate the stated constraints.
+
+Provide a concise summary of:
+
+* Verified requirements and constraints
+* Improvements made
+* Any remaining issues or limitations
+* Optional enhancements that are outside the assignment scope
